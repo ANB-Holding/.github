@@ -1,0 +1,6 @@
+{
+  "name": "ANB - Ticket guard",
+  "description": "Reopens a ticket closed as Not planned without a drop: reason label.",
+  "iconName": "octicon issue-reopened",
+  "categories": ["Automation"]
+}

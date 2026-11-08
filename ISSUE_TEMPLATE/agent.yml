@@ -1,0 +1,79 @@
+name: "🤖 New AI agent"
+description: Ask for an AI agent that takes over repetitive work on our data (SharePoint, ERP, CRM - read-only by default).
+title: "[Agent] "
+labels: ["type:agent"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Agent guardrails (non-negotiable):** access only to the folders / data named below, read-only by default,
+        writes only to a review folder, a person approves before anything is sent, signed, paid or changed,
+        every action logged, one scoped key per agent with a hard spending cap, and an owner in the agent register.
+
+        **After you submit:** add a comment `@claude start` to wake the AI up.
+
+  - type: dropdown
+    id: department
+    attributes:
+      label: Department
+      options: [Legal, Finance, HR, Sales, After-sales, Bikeera, Real estate, IT, Other]
+    validations:
+      required: true
+
+  - type: textarea
+    id: task
+    attributes:
+      label: What should the agent do?
+      placeholder: "Read every licence and contract in the Legal SharePoint folder, track renewal dates, prepare the renewal in our standard format."
+    validations:
+      required: true
+
+  - type: textarea
+    id: sources
+    attributes:
+      label: Data it may READ
+      description: Exact SharePoint folders, ERP / CRM data, mailboxes. Nothing outside this list.
+    validations:
+      required: true
+
+  - type: textarea
+    id: outputs
+    attributes:
+      label: Where it WRITES its results
+      description: A review folder only. Name it.
+      placeholder: "Legal > Renewals > _Agent review"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: frequency
+    attributes:
+      label: How often does it run?
+      options: [On request, Daily, Weekly, Monthly]
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: actions
+    attributes:
+      label: Sensitive actions (each one needs a person's approval every time)
+      options:
+        - label: Sends emails or messages
+        - label: Touches personal data (legal review needed)
+        - label: Changes data in a system (ERP, CRM, website)
+
+  - type: input
+    id: owner
+    attributes:
+      label: Business owner of the agent
+      description: No owner, no agent.
+    validations:
+      required: true
+
+  - type: input
+    id: budget
+    attributes:
+      label: Monthly budget cap (USD)
+      placeholder: "20"
+    validations:
+      required: true

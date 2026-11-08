@@ -1,0 +1,6 @@
+{
+  "name": "ANB - Security scan",
+  "description": "Free security scan on every version: leaked secrets (TruffleHog) and code weaknesses (Semgrep).",
+  "iconName": "octicon shield-check",
+  "categories": ["Code Scanning"]
+}

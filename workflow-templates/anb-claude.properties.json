@@ -1,0 +1,6 @@
+{
+  "name": "ANB - Claude builds tickets",
+  "description": "Mention @claude on a ticket: questions, spec, then a version on a ticket branch with a draft pull request. Never merges.",
+  "iconName": "octicon copilot",
+  "categories": ["Automation"]
+}

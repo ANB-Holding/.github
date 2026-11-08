@@ -1,0 +1,30 @@
+# ANB - Ticket guard
+# A ticket ends Live or Dropped WITH a reason. Closing as "Not planned" without a drop: label reopens it.
+name: ANB - Ticket guard
+
+on:
+  issues:
+    types: [closed]
+
+permissions:
+  issues: write
+
+jobs:
+  drop-needs-reason:
+    if: github.event.issue.state_reason == 'not_planned'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const hasReason = issue.labels.some(l => l.name.startsWith('drop:'));
+            if (hasReason) return;
+            await github.rest.issues.update({
+              ...context.repo, issue_number: issue.number, state: 'open'
+            });
+            await github.rest.issues.createComment({
+              ...context.repo, issue_number: issue.number,
+              body: 'A ticket can only be dropped with a reason. Add one label: `drop:cost`, `drop:security-risk`, `drop:duplicate`, `drop:not-a-priority` or `drop:not-feasible`, add a short comment, then close it again as **Not planned**.'
+            });

@@ -1,0 +1,108 @@
+name: "💡 New idea"
+description: Describe an idea in your own words. The AI turns it into a clear spec and a working version 1 you can click and test.
+title: "[Idea] "
+labels: ["type:idea"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **How this works:** you describe the idea, the AI asks you a few questions and writes the spec,
+        then builds version 1 on a safe test copy. You try it, ask for changes (v2, v3...), and validate it.
+        A senior developer of the IT team reviews it before anything goes live. Nothing here touches production.
+
+        **After you submit:** add a comment `@claude start` to wake the AI up.
+
+  - type: dropdown
+    id: business
+    attributes:
+      label: Business
+      options:
+        - Bikeera
+        - KTM
+        - Mazda
+        - Ford
+        - Ford Trucks
+        - Real estate
+        - Academy
+        - Finance
+        - HR
+        - Legal
+        - Group / other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: system
+    attributes:
+      label: Which system does it touch?
+      description: Not sure? Pick "Not sure", the AI and the IT team will decide.
+      options:
+        - Bikeera website (WooCommerce)
+        - Brand website (Mazda / Ford / KTM)
+        - In-house CRM
+        - In-house ERP
+        - Oracle APEX app
+        - Oracle ERP (spec only)
+        - Real estate tools
+        - Internal tool or AI agent
+        - Not sure
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: Who has this problem, how often, and what does it cost today (time, sales, errors)?
+      placeholder: "Customers in the showroom ask which frame size fits them; we check paper charts each time."
+    validations:
+      required: true
+
+  - type: textarea
+    id: idea
+    attributes:
+      label: The idea
+      description: What should it do? Write it as you would explain it to a colleague.
+      placeholder: "On every bike page, the customer types their height and sees the right frame size."
+    validations:
+      required: true
+
+  - type: textarea
+    id: success
+    attributes:
+      label: How will you know it works?
+      placeholder: "Sales stop using the paper charts; fewer returns for wrong size."
+    validations:
+      required: true
+
+  - type: textarea
+    id: data
+    attributes:
+      label: What data does it need?
+      description: Products, prices, customers, invoices, SharePoint folders... Name the source if you know it.
+
+  - type: checkboxes
+    id: sensitive
+    attributes:
+      label: Sensitive data
+      options:
+        - label: It uses personal data (customers, employees) - legal review needed before go-live
+        - label: It uses financial or accounting data
+        - label: It sends something to customers, pays, signs or changes the ERP (a person must approve each time)
+
+  - type: dropdown
+    id: size
+    attributes:
+      label: Size
+      description: Bigger ideas are filtered by your manager first.
+      options:
+        - Small (a page, a report, a reminder)
+        - Bigger (new flow, several systems, several weeks)
+    validations:
+      required: true
+
+  - type: input
+    id: manager
+    attributes:
+      label: Your manager
+      description: Required for bigger ideas.

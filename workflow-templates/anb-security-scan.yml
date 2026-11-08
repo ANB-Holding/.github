@@ -1,0 +1,38 @@
+# ANB - Security scan (free tools, works on the GitHub Free plan)
+# Runs on every version (pull request) and on main. Only green versions go to senior-developer review.
+#  - secrets:  TruffleHog - leaked keys, passwords, tokens anywhere in the change
+#  - code:     Semgrep    - common weaknesses (injection, XSS, unsafe crypto...) + hard-coded secrets
+#  - libraries: turn on Dependabot alerts in the repository settings (free) for outdated / vulnerable libraries
+name: ANB - Security scan
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  secrets:
+    name: Leaked secrets
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: trufflesecurity/trufflehog@main
+        with:
+          extra_args: --results=verified,unknown
+
+  code:
+    name: Code weaknesses
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    container:
+      image: semgrep/semgrep
+    steps:
+      - uses: actions/checkout@v4
+      - run: semgrep scan --config p/default --config p/secrets --error --metrics=off
